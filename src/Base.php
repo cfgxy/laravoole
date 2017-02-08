@@ -53,14 +53,13 @@ abstract class Base
         // from \Illuminate\Contracts\Console\Kernel
         // do not using Http\Kernel here, because needs SetRequestForConsole
         $this->app->bootstrapWith([
-            'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-            'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-            'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-            'Illuminate\Foundation\Bootstrap\HandleExceptions',
-            'Illuminate\Foundation\Bootstrap\RegisterFacades',
-            'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-            'Illuminate\Foundation\Bootstrap\RegisterProviders',
-            'Illuminate\Foundation\Bootstrap\BootProviders',
+            \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
+            \Illuminate\Foundation\Bootstrap\LoadConfiguration::class,
+            \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
+            \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
+            \Illuminate\Foundation\Bootstrap\SetRequestForConsole::class,
+            \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
+            \Illuminate\Foundation\Bootstrap\BootProviders::class,
         ]);
         chdir(public_path());
     }
@@ -99,9 +98,9 @@ abstract class Base
             if (isset($illuminate_response)) {
                 $kernel->terminate($illuminate_request, $illuminate_response);
             }
-            if ($illuminate_request->hasSession()) {
-                $illuminate_request->getSession()->clear();
-            }
+            //if ($illuminate_request->hasSession()) {
+            //    $illuminate_request->getSession()->clear();
+            //}
 
             if ($this->app->isProviderLoaded(\Illuminate\Auth\AuthServiceProvider::class)) {
                 $this->app->register(\Illuminate\Auth\AuthServiceProvider::class, [], true);
